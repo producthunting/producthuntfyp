@@ -1,0 +1,9 @@
+*.pyc  
+*~  
+__pycache__  
+venv  
+yolo configuration files  
+yolo3.py
+coco.names
+/static  
+.DS_Store 
