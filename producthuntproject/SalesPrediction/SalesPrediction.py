@@ -26,7 +26,7 @@ from sklearn import linear_model
 #
 #
 
-def linear_prediction(path):
+def linear_prediction(path,target_column,x_column):
     dict_predict={}
 
     # read file
@@ -51,8 +51,8 @@ def linear_prediction(path):
     # plt.tight_layout()
 
 
-    dict_predict['orignal_x']=list(advertising_df['TV'])
-    dict_predict['orignal_y']=list(advertising_df['Sales'])
+    dict_predict['orignal_x']=list(advertising_df[x_column])
+    dict_predict['orignal_y']=list(advertising_df[target_column])
     # print(dict_predict['orignal_x'])
 
     # Let's see how Sales are related with other variables using scatter plot.
@@ -65,8 +65,8 @@ def linear_prediction(path):
     # plt.show()
 
 
-    X = advertising_df['TV']
-    Y = advertising_df['Sales']
+    X = advertising_df[x_column]
+    Y = advertising_df[target_column]
     # X=advertising['YearsExperience']
     # Y=advertising['Salary']
 
@@ -107,8 +107,9 @@ def linear_prediction(path):
     # plt.show()
 
     # print(model.predict([[4.1]]))
-
+    dict_predict['intercept_value']=model.intercept_
+    dict_predict['coef_value']=model.coef_
     return dict_predict
 
 
-# linear_prediction('advertising.csv')
+# linear_prediction('advertising.csv','Sales','TV')

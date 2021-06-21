@@ -12,6 +12,7 @@ from AnalysisModule.DFSA import daraz_analysis_function
 from SeoKeywordRecommend.SeoKeyword import seokeyword
 from PlatformRecommend.recommendplatform import Platform_Recommendation
 from SalesPrediction.SalesPrediction import linear_prediction
+from SalesPrediction.getcolumns import get_columns
 
 act_url=settings.MEDIA_URL
 act_root=settings.MEDIA_ROOT
@@ -124,8 +125,8 @@ def sales_predication(request):
     try:
         if request.method=='POST':
             uploaded_file_url=savefile(request,'Userinput_predictiondataset')
-            dict_predict=linear_prediction(uploaded_file_url)
-            return render(request,'userapp/salespredication.html',{'dict_predict':dict_predict})
+            columns=get_columns(uploaded_file_url)
+            return render(request,'userapp/salespredication_column.html',{'file_name':uploaded_file_url,'columns':columns})
         else:
             return render(request, 'userapp/salespredication_front.html')
     except:
@@ -133,6 +134,21 @@ def sales_predication(request):
             os.remove(uploaded_file_url)
         messages.error(request, 'Invalid Dataset!')
         return redirect('sales-predication')
+
+def actual_prediction(request):
+    try:
+        uploaded_file_url=request.GET.get('path_data')
+        target_column=request.GET.get('target')
+        x_column=request.GET.get('Independent_column')
+        dict_predict = linear_prediction(uploaded_file_url, target_column, x_column)
+        return render(request,'userapp/salespredication.html',{'dict_predict':dict_predict})
+    except:
+        if uploaded_file_url is not None:
+            os.remove(uploaded_file_url)
+        messages.error(request, 'Invalid Dataset!')
+        return redirect('sales-predication')
+
+
 
 def seo_keyword(request):
     settings.MEDIA_ROOT=act_root

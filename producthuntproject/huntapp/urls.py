@@ -26,7 +26,8 @@ urlpatterns=[
     path('all-item-market-revenue',v.all_item_market_revenue,name='all-item-market-revenue'),
     path('repeat-product-sold', v.repeated_sold, name='repeat-product-sold'),
     path('repeat-product-sales', v.repeated_sales, name='repeat-product-sales'),
-    path('platform-recommend',v.platform_recommend,name='platform-recommend')
+    path('platform-recommend',v.platform_recommend,name='platform-recommend'),
+    path('actual-prediction', v.actual_prediction, name='actual-prediction')
 
 ]
 
